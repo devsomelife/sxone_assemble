@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEFAULT_FILE_PATH="/app/data.csv"
+DEFAULT_FILE_PATH="/app/export.xlsx"
 
 current_month=$(date +%m)
 current_year=$(date +%Y)

@@ -15,24 +15,27 @@ if len(sys.argv) == 1:
 
 file_path = sys.argv[1]
 
+xl = pd.ExcelFile(file_path)
+dfxl = xl.parse('SX')
+
+dfxl.to_csv('temp_export.csv', sep='|', index=False)
+data_path = 'temp_export.csv'
+
 now = datetime.now()
 month = now.month if len(sys.argv) < 3 else int(sys.argv[2])
 year = now.year if len(sys.argv) < 4 else int(sys.argv[3])
 
-df = pd.read_csv(file_path, delimiter='|', parse_dates=['Date'], dayfirst=True)
+df = pd.read_csv(data_path, delimiter='|', parse_dates=['Date'], dayfirst=False)
 df = df[(df['Date'].dt.year == year) & (df['Date'].dt.month == month)]
-df['Durée'] = df['Durée'].str.replace(',', '.').astype(float)
-
-df['Durée'] = df['Durée'].replace({0.13: 0.125, 0.38: 0.375, 0.88: 0.875})
 df['Société'] = df['Société'].fillna('-')
 df = df.groupby(['Société', 'Affaire', 'Ligne d\'affaire'])['Durée'].sum().reset_index()
 df['Ligne d\'affaire'] = df['Ligne d\'affaire'].str.replace('\n', '')
 
-totalDuration = 0
+total_worked = 0
 print("{:=<{}}".format("====[ VSA SUMMARY FOR {}/{} ]====".format(month, year), PADDING))
 for index, row in df.iterrows():
     if not row.isnull().any():
         print("{:<20} | {:<20} | [{:<5}] {} ".format(row['Société'], row['Affaire'], row['Durée'], row['Ligne d\'affaire']))
-        totalDuration += row['Durée']
+        total_worked += row['Durée']
 print("=" * PADDING)
-print("{:<46} {}".format("Days worked in the selected month: ", totalDuration))
+print("{:<46} {}".format("Days worked in the selected month: ", total_worked))
