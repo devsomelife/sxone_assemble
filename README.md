@@ -1,27 +1,27 @@
 # SXONE ASSEMBLE!
 
-Short python script for people tired of manually calculating their monthly time tracking from SXONE.
+Petit script Python pour récupérer en 30 secondes son cumul mensuel de temps par affaire depuis un export SXONE.
 
-## Requirements
+## Pré-requis
 
-You need either Python 3 or Docker
+Vous avez besoin de Docker (Docker engine sur Windows) ou de Python 3
 
-## TL;DR For Windows users
+## TL;DR Pour les utilisateurs Windows
 
-Export all your SXONE timesheet in one xlsx file into your default Downloads/Téléchargements folder and run in a terminal (with Docker running).
 
-_Note: this command works for English & French windows._ 
+* Exporter vos temps SXONE comme expliqué ici : [Préparer le fichier CSV](#préparer-le-fichier-csv)
+* Lancez la commande suivante depuis un terminal standard Windows (pas Powershell ou WSL mais une invite de commande classique).
 
 ```bash
 docker run -it --rm -v %USERPROFILE%\Downloads\export_everwin.xlsx:/app/export.xlsx devsomelife/sxone_assemble:latest
 ```
 
 
-## Usage
+## Utilisation
 
 ### Python
 
-You need Python 3 installed, grab the script, then you just run:
+Installez Python 3.x, chopez le script sxone_assemble.py, exportez vos temps et lancez : 
 
 ```bash
 python sxone_assemble.py /path/export_everwin.xlsx [month] [year]
@@ -29,8 +29,9 @@ python sxone_assemble.py /path/export_everwin.xlsx [month] [year]
 
 ### Docker
 
-You just need docker. Then you run:
-Note that the mounted name of the file (/app/export.xlsx) is critical and must not be changed.
+Encore plus simple, exportez vos temps et lancez la commande suivante, en remplacant "/path/export_everwin.xlsx" avec le chemin de votre fichier d'export. 
+
+NE PAS CHANGER /app/export.xlsx DANS LA COMMANDE, le nom du fichier dans le conteneur est important.
 
 ```bash
 docker run -it --rm -v /path/export_everwin.xlsx:/app/export.xlsx devsomelife/sxone_assemble:latest [month] [year]
@@ -38,10 +39,10 @@ docker run -it --rm -v /path/export_everwin.xlsx:/app/export.xlsx devsomelife/sx
 
 ## Notes
 
-All [month] values default to the current month if not specified  
-All [year] values default to the current year if not specified. The [month] parameter is required is you want to specify the [year]
+Le paramêtre [month] prend le mois en cours par défaut si pas spécifié  
+Le paramêtre [year] prend l'année en cours par défaut si pas spécifiée. Le paramêtre [mois] est requis si vous spécifiez [year]
 
-## Examples
+## Exemples
 
 ```bash
 python sxone_assemble.py /path/export_everwin.xlsx
@@ -51,7 +52,7 @@ python sxone_assemble.py /path/export_everwin.xlsx 11
 python sxone_assemble.py /path/export_everwin.xlsx 5 2021
 ```
 
-And it's docker equivalent
+La même chose pour Docker
 
 ```bash
 docker run -it --rm -v /path/export_everwin.xlsx:/app/export.xlsx devsomelife/sxone_assemble:latest
@@ -61,20 +62,20 @@ docker run -it --rm -v /path/export_everwin.xlsx:/app/export.xlsx devsomelife/sx
 docker run -it --rm -v /path/export_everwin.xlsx:/app/export.xlsx devsomelife/sxone_assemble:latest 5 2021
 ```
 
-## PREPARING THE CSV FILE
-
-### FRENCH
+## Préparer le fichier CSV
 
 Depuis le menu Temps, choisir Feuilles de temps.
 
 ![/images/sxone01.png](images/sxone01.png)
 
 
-Séléctionnez les feuilles qui vous intéressent (ou toutes, on s'en fiche), puis Exporter et "Exporter les temps saisis des éléments séléctionnés"
+Séléctionnez les feuilles qui vous intéressent (ou toutes, on s'en fiche), puis Exporter et "Exporter les temps saisis des éléments séléctionnés".
+
+Note : Si vous choisissez toutes les feuilles, attention, ce sont en fait seulement les feuilles affichées (et donc paginées).
 
 ![images/sxone02.png](images/sxone02.png)
 
-Et zou, si vous avez votre fichier dans votre répertoire standard de Téléchargements (qui reste quand même Downloads derrière) par exemple
+Et zou, si vous avez votre fichier dans votre répertoire standard de Téléchargements (qui reste quand même Downloads derrière) par exemple, depuis une invite de commande (et non Powershell ou WSL) : 
 
 ```bash
 docker run -it --rm -v %USERPROFILE%\Downloads\export_everwin.xlsx:/app/export.xlsx devsomelife/sxone_assemble:latest

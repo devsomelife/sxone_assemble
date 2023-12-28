@@ -35,7 +35,7 @@ df = df.groupby(['Société', 'Affaire', 'Ligne d\'affaire'])['Durée'].sum().re
 df['Ligne d\'affaire'] = df['Ligne d\'affaire'].str.replace('\n', '')
 
 total_worked = 0
-print("{:=<{}}".format("====[ VSA SUMMARY FOR {}/{} ]====".format(month, year), PADDING))
+print("{:=<{}}".format("====[ SUMMARY FOR {}/{} ]====".format(month, year), PADDING))
 for index, row in df.iterrows():
     if not row.isnull().any():
         print("{:<20} | {:<20} | [{:<5}] {} ".format(row['Société'], row['Affaire'], row['Durée'], row['Ligne d\'affaire']))
