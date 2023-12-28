@@ -8,7 +8,7 @@ PADDING = 150
 if len(sys.argv) == 1:
     print("Usage: python sxone_assemble.py [file_path] [month] [year].")
     print("\tExample: python sxone_assemble.py /home/user/data.csv 11 2023\n")
-    print("file_path: Path of the file. File must be a valid SXONE export, as a CSV with pipe separators")
+    print("file_path: Path of the file. File must be a valid SXONE export, as a CSV with pipe separators.")
     print("month: The month to filter by. Defaults to the current month.")
     print("year: The year to filter by. Defaults to the current year.")
     sys.exit()
