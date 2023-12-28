@@ -3,6 +3,9 @@ from datetime import datetime
 
 import pandas as pd
 
+import warnings
+warnings.simplefilter("ignore")
+
 PADDING = 150
 
 if len(sys.argv) == 1:
